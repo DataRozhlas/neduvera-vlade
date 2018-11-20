@@ -10,10 +10,24 @@ zarazeni <- read_delim("zarazeni.unl", "|", locale = locale(encoding="windows-12
 file.remove(list.files(pattern="*.unl|*.zip"))
 
 # načíst všechna hlasování
-zipfiles <- c("hl-2002ps.zip", "hl-2006ps.zip", "hl-2010ps.zip", "hl-2013ps.zip")
+roky <- c(2002, 2006, 2010, 2013, 2017)
 
-https://www.psp.cz/eknih/cdrom/opendata/
+hlasovani <- data.frame(id_poslanec=numeric(), id_hlasovani=numeric(), vyseledek=character())
+
+spojHlasy <- function(rok) {
+  download.file(paste0("https://www.psp.cz/eknih/cdrom/opendata/hl-", rok, "ps.zip"), paste0("hl-", rok, "ps.zip"))
+  unzip(paste0("hl-", rok, "ps.zip"))
+  soubory <- list.files(pattern="hl\\d{4}h\\d*.unl")
+  result <- data.frame(id_poslanec=numeric(), id_hlasovani=numeric(), vyseledek=character())
+  for (i in soubory) {
+    result <- rbind(result, read_delim(i, "|", locale = locale(encoding="windows-1250"), col_names = c("id_poslanec", "id_hlasovani", "vysledek")))
+  }
+  file.remove(list.files(pattern="*.unl|*.zip"))
+  return(result)
+}
+
+for (j in roky) {
+  hlasovani <- rbind(hlasovani, spojHlasy(j))
+}
 
 
-download.file("https://www.psp.cz/eknih/cdrom/opendata/hl-2002ps.zip", "hl-2002ps.zip")
-unzip("hl-2002ps.zip")
