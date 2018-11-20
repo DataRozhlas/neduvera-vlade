@@ -1,4 +1,6 @@
 library(tidyverse)
+library(jsonlite)
+
 
 # načíst poslance
 download.file("https://www.psp.cz/eknih/cdrom/opendata/poslanci.zip", "poslanci.zip")
@@ -44,3 +46,8 @@ for (j in roky) {
 }
 
 hlasovani$datetime <- as.POSIXct(paste(hlasovani$datum, hlasovani$cas), format = "%d.%m.%Y %H:%M:%S")
+
+rm(roky)
+
+#id hlasování
+vybrana_hlasovani <- c(38766, 45611, 46289, 47232, 47953, 49203, 53463, 55722, 56342, 57199, 60961)
