@@ -12,8 +12,6 @@ options: [] #wide, noheader (, nopic)
 </div>
 
 
-
-
 <left>
 	<p>
 	<b>KAREL HYNEK MÁCHA</b>
