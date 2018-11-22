@@ -1,0 +1,10 @@
+.timelineSeries_circ {
+    stroke: rgb(214, 39, 40);
+    stroke-width: 4;
+    fill: white !important;
+}
+
+#succ {
+    stroke: green;
+    fill: black !important;
+}

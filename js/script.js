@@ -48,17 +48,10 @@ var tooltip = d3.select("body").append("div")
                 subgrpsizes.hasOwnProperty(el.k) ? subgrpsizes[el.k]++ : subgrpsizes[el.k] = 1
             });
 
-<<<<<<< HEAD
         var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
             if (!reverse) { return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1 }
             else { return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1 }
         });
-=======
-            var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
-                if (!reverse) { console.log("ok"); return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1 }
-                else { return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1 }
-            });
->>>>>>> 379ac21361345c7412b3ddf9aa45b50ab7d403d9
 
             arr.sort(function(a,b) {
                 if (!reverse) { return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1 }

@@ -1,10 +1,5 @@
-d3Axis = d3
-d3Array = d3
-d3TimeFormat = d3
-d3Time = d3
-d3Scale = d3
-d3Selection = d3
-d3Zoom = d3
+var d3Axis = d3Array = d3TimeFormat = d3Time = d3Scale = d3Selection = d3Zoom = d3;
+
 d3.timelines = function() {
 		var DISPLAY_TYPES = ["circle", "rect"];
 
@@ -45,7 +40,7 @@ d3.timelines = function() {
 				timeIsRelative = false,
 				timeIsLinear = false,
 				fullLengthBackgrounds = false,
-				itemHeight = 15,
+				itemHeight = 10,
 				itemMargin = 5,
 				navMargin = 60,
 				showTimeAxis = true,
