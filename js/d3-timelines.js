@@ -20,7 +20,7 @@ d3.timelines = function() {
 				tickFormat = {
 					format: d3TimeFormat.timeFormat("%Y"),
 					tickTime: d3Time.timeYear,
-					tickInterval: 2,
+					tickInterval: window.innerWidth > 600 ? 2 : 4,
 					tickSize: 6,
 					tickValues: null
 				},
