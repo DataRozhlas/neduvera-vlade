@@ -48,11 +48,11 @@ function dataSort(data) {
         });
 
         var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
-            return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1
+            return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1
         });
 
         arr.sort(function(a,b) {
-            return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1
+            return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? -1 : 1
         });
 
         return arr
