@@ -1,12 +1,14 @@
-title: "Nedůvěra vládě: Kdo jak hlasoval při všech předchozích pokusech?"
+title: "Jak těžké je vyslovit nedůvěru vládě? Ze třinácti pokusů uspěl zatím jediný"
 perex: "Skoro 140 tisíc lidí přijede do Prahy každý den za prací. Míří hlavně do kancelářských budov a do centra města. S nimi pak dorazí i přes půl milionu návštěvníků. Ukázala to analýza dat o pohybu mobilních telefonů, kterou si nyní město nechává zpracovat."
-published: "21. listopadu 2018"
-coverimg: https://interaktivni.rozhlas.cz/brexit/media/cover.jpg
-coverimg_note: "Foto <a href='#'>ČTK</a>"
+published: "23. listopadu 2018"
+coverimg: https://www.irozhlas.cz/sites/default/files/styles/zpravy_snowfall/public/uploader/paroub-kolaz_181122-220526_pek.jpg?itok=MXn8H9FB
+coverimg_note: "Jiří Paroubek 24. března 2009, v den, kdy jím vyvolané hlasování ukončilo vládu Mirka Topolánka. | Foto archiv ČTK"
 styles: []
 libraries: [d3v5] #jquery, d3, d3v5, d3csv, highcharts, datatables
 options: [] #wide, noheader (, nopic)
 ---
+<wide><div id="timeline1"></div></wide>
+
 
 <div id="graf1">
 </div>
@@ -50,7 +52,7 @@ options: [] #wide, noheader (, nopic)
 <div id="graf25">
 </div>
 
-<div id="timeline1"></div>
+
 
 <left>
 	<p>
