@@ -11,6 +11,7 @@ options: [] #wide, noheader (, nopic)
 <div id="graf1">
 </div>
 
+<div id="timeline1"></div>
 
 <left>
 	<p>

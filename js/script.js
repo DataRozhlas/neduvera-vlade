@@ -37,22 +37,24 @@ var svgContainer = d3.select("#graf1").append("svg")
     .attr("class", "snemovnasvg");
 
 function dataSort(data) {
-    var dataNewOrder = poslSort( data.filter(function(el){return el.v === "A"}) )
-    .concat( poslSort(data.filter(function(el){return !(/[NBA]/.test(el.v))})) )
-    .concat( poslSort(data.filter(function(el){return /[NB]/.test(el.v)})).reverse() );
+    var dataNewOrder = poslSort( data.filter(function(el){return el.v === "A"}, false) )
+    .concat( poslSort(data.filter(function(el){return !(/[NBA]/.test(el.v))}), false) )
+    .concat( poslSort(data.filter(function(el){return /[NB]/.test(el.v)}), true));
 
-    function poslSort(arr) {
+    function poslSort(arr, reverse) {
         var subgrpsizes = {};
         arr.forEach(function(el) {
             subgrpsizes.hasOwnProperty(el.k) ? subgrpsizes[el.k]++ : subgrpsizes[el.k] = 1
         });
 
         var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
-            return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1
+            if (!reverse) { console.log("ok"); return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1 }
+            else { return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1 }
         });
 
         arr.sort(function(a,b) {
-            return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? -1 : 1
+            if (!reverse) { return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1 }
+            else { return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1 }
         });
 
         return arr
