@@ -23,6 +23,8 @@ var vyroky = {
     "K": "zdržel(a) se/nehlasoval(a)"
 };
 
+var vmax = Math.max(window.innerWidth, window.innerHeight)/100;
+
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style('opacity', 0)
@@ -30,18 +32,44 @@ var tooltip = d3.select("body").append("div")
     .style('padding', '0 10px');
 
 var svgContainer = d3.select("#graf1").append("svg")
-    .attr("width", "52.2vmax")
-    .attr("height", "27vmax");
+    .attr("width", 52.2 * vmax)
+    .attr("height", 27 * vmax)
+    .attr("class", "snemovnasvg");
+
+function dataSort(data) {
+    var dataNewOrder = poslSort( data.filter(function(el){return el.v === "A"}) )
+    .concat( poslSort(data.filter(function(el){return !(/[NBA]/.test(el.v))})) )
+    .concat( poslSort(data.filter(function(el){return /[NB]/.test(el.v)})).reverse() );
+
+    function poslSort(arr) {
+        var subgrpsizes = {};
+        arr.forEach(function(el) {
+            subgrpsizes.hasOwnProperty(el.k) ? subgrpsizes[el.k]++ : subgrpsizes[el.k] = 1
+        });
+
+        var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
+            return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1
+        });
+
+        arr.sort(function(a,b) {
+            return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1
+        });
+
+        return arr
+    }
+
+    return dataNewOrder
+}
 
 var circles = svgContainer.selectAll("circle")
-    .data(data[1])
+    .data(dataSort(data[1]))
     .enter()
     .append("circle")
-    .attr("cx", function(d, i) {return Math.floor(i/10) * 2.6 + 1.4 + "vmax"})
-    .attr("cy", function(d, i) {return (i % 10) * 2.6 + 1.4 + "vmax"})
-    .attr("r", "1vmax")
+    .attr("cx", function(d, i) {return (Math.floor(i/10) * 2.6 + 1.4) * vmax})
+    .attr("cy", function(d, i) {return ((i % 10) * 2.6 + 1.4) * vmax})
+    .attr("r", 1 * vmax)
     .attr("stroke", function(d, i) {return barvicky[d.k]})
-    .attr("stroke-width", "0.35vmax")
+    .attr("stroke-width", 0.35 * vmax)
     .attr("fill", function(d, i) {if (d.v=="A") {return "black"} else if (d.v=="B"|d.v=="N") {return "white"} else {return "silver"}})
     .on("mouseover", function(d) {
         tooltip.transition()
@@ -70,16 +98,19 @@ var trojuhelnicek = svgContainer
     .attr("refX", 5)
     .attr("refY", 5)
     .attr("markerUnits", "strokeWidth")
-    .attr("markerWidth", "0.85vmax")
-    .attr("markerHeight", "0.85vmax")
+    .attr("markerWidth", 0.85 * vmax)
+    .attr("markerHeight", 0.85 * vmax)
     .attr("orient", "auto")
     .append("path")
     .attr("d", "M 0,0 L 10,5 L 0,10 z")
     .attr("fill", "#f00")
 
+var svgWidth = document.getElementsByClassName('snemovnasvg')[0].getAttribute("width");
+var svgHeight = document.getElementsByClassName('snemovnasvg')[0].getAttribute("height");
+
 var puliciCara = svgContainer
     .append("polyline")
-    .attr("points", function() {return svgContainer._groups[0][0].clientWidth/2 +  "," + (svgContainer._groups[0][0].clientHeight-5) + " " + svgContainer._groups[0][0].clientWidth/2 + ",5"})
+    .attr("points", function() {return svgWidth/2 +  "," + (svgHeight-5) + " " + svgWidth/2 + ",5"})
     .attr("stroke", "black")
     .attr("fill", "none")
     .attr("marker-start", "url(#triangle)")
