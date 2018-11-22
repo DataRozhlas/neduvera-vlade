@@ -35,4 +35,23 @@ for (i in vybrana_hlasovani) {
   vysledek <- c(vysledek, data)
 }
 
-write_lines(toJSON(vysledek), "../js/data.json")
+#dvě chybějící hlasování
+vysledek[[2]] <- vysledek[[2]] %>% left_join(ch2003) %>% select(1,2,3,v=5)
+vysledek[[16]] <- vysledek[[16]] %>% left_join(ch2010) %>% select(1,2,3,v=5)
+
+
+vysledek[[1]]$datum <- "26.09.2003"
+vysledek[[1]]$pro <- 98
+vysledek[[1]]$proti <- 100
+vysledek[[1]]$zdrzel <- 1
+
+vysledek[[15]]$pro <- 80
+vysledek[[15]]$proti <- 113
+vysledek[[15]]$zdrzel <- 0
+
+vysledek[[15]]
+
+
+write_lines(toJSON(vysledek), "data.json")
+
+
