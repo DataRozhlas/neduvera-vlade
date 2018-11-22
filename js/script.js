@@ -48,7 +48,7 @@ function dataSort(data) {
         });
 
         var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
-            if (!reverse) { console.log("ok"); return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1 }
+            if (!reverse) { return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1 }
             else { return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1 }
         });
 
