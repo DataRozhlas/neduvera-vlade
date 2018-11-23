@@ -31,38 +31,42 @@ var tooltip = d3.select("body").append("div")
     .style("position", "absolute")
     .style("padding", "0 10px");
 
+function dataSort(data) {
+    var dataNewOrder = poslSort( data.filter(function(el){return el.v === "A";}, false) )
+        .concat( poslSort(data.filter(function(el){return !(/[NBA]/.test(el.v));}), false) )
+        .concat( poslSort(data.filter(function(el){return /[NB]/.test(el.v);}), true));
+
+    function poslSort(arr, reverse) {
+        var subgrpsizes = {};
+        arr.forEach(function(el) {
+            subgrpsizes.hasOwnProperty(el.k) ? subgrpsizes[el.k]++ : subgrpsizes[el.k] = 1;
+        });
+
+        var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
+            if (!reverse) { return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1; }
+            else { return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1; }
+        });
+
+        arr.sort(function(a,b) {
+            if (!reverse) { return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1; }
+            else { return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1; }
+        });
+
+        return arr;
+    }
+
+    return dataNewOrder;
+}
+
 [1,3,5,7,9,11,13,15,17,19,21,23,25].forEach(function(q) {
+    var titulek = d3.select("#graf" + q)
+        .append("strong")
+        .text(data[q-1][0].datum + " | pro návrh: " + data[q-1][0].pro + " | proti návrhu: " + data[q-1][0].proti + " | zdrželo se: " + data[q-1][0].zdrzel + " | nehlasovalo: " + (200-data[q-1][0].zdrzel-data[q-1][0].proti-data[q-1][0].pro));
+
     var svgContainer = d3.select("#graf" + q).append("svg")
         .attr("width", 48 * vmax)
         .attr("height", 24.5 * vmax)
         .attr("class", "snemovnasvg");
-
-    function dataSort(data) {
-        var dataNewOrder = poslSort( data.filter(function(el){return el.v === "A";}, false) )
-            .concat( poslSort(data.filter(function(el){return !(/[NBA]/.test(el.v));}), false) )
-            .concat( poslSort(data.filter(function(el){return /[NB]/.test(el.v);}), true));
-
-        function poslSort(arr, reverse) {
-            var subgrpsizes = {};
-            arr.forEach(function(el) {
-                subgrpsizes.hasOwnProperty(el.k) ? subgrpsizes[el.k]++ : subgrpsizes[el.k] = 1;
-            });
-
-            var sizeOrder = Object.keys(subgrpsizes).sort(function(a,b){
-                if (!reverse) { return subgrpsizes[a] < subgrpsizes[b] ? 1 : -1; }
-                else { return subgrpsizes[a] < subgrpsizes[b] ? -1 : 1; }
-            });
-
-            arr.sort(function(a,b) {
-                if (!reverse) { return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1; }
-                else { return sizeOrder.indexOf(a.k) > sizeOrder.indexOf(b.k) ? 1 : -1; }
-            });
-
-            return arr;
-        }
-
-        return dataNewOrder;
-    }
 
     var circles = svgContainer.selectAll("circle")
         .data(dataSort(data[q]))
